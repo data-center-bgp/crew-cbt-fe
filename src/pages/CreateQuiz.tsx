@@ -42,7 +42,7 @@ const CreateQuiz = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/quiz/categories"
+          `${import.meta.env.VITE_API_URL}/api/crew_cbt/quiz/categories`
         );
         if (!response.ok) throw new Error("Failed to fetch categories");
         const data = await response.json();
@@ -83,7 +83,7 @@ const CreateQuiz = () => {
       };
 
       const response = await fetch(
-        "http://localhost:3000/api/quiz/createQuestion",
+        `${import.meta.env.VITE_API_URL}/api/crew_cbt/quiz/createQuestion`,
         {
           method: "POST",
           headers: {

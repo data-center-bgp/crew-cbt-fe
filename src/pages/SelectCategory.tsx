@@ -19,7 +19,7 @@ const SelectCategoryPage = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/quiz/categories"
+          `${import.meta.env.VITE_API_URL}/quiz/categories`
         );
         if (!response.ok) throw new Error("Failed to fetch categories");
         const data = await response.json();

@@ -51,7 +51,7 @@ const Quiz = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/quiz/categories/${category}/`
+          `${import.meta.env.VITE_API_URL}/quiz/categories/${category}/`
         );
         if (!response.ok) throw new Error("Failed to fetch questions");
         const data: QuizResponse = await response.json();
@@ -88,19 +88,22 @@ const Quiz = () => {
       console.log("Questions:", questions);
       console.log("User answers:", userAnswers);
       console.log("Final answers array:", answers);
-      const response = await fetch("http://localhost:3000/api/quiz/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nama,
-          nik,
-          category_id: category,
-          answers,
-          time_taken: 600 - timeLeft,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/quiz/submit`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nama,
+            nik,
+            category_id: category,
+            answers,
+            time_taken: 600 - timeLeft,
+          }),
+        }
+      );
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Server error response:", errorData);
