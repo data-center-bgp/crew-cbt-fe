@@ -95,6 +95,7 @@ const Quiz = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             nama,
             nik,
