@@ -28,6 +28,7 @@ const Quiz = () => {
   const [userAnswers, setUserAnswers] = useState<{ [index: number]: number }>(
     {}
   );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { category, nik, nama } = location.state;
@@ -81,6 +82,7 @@ const Quiz = () => {
   };
 
   const handleSubmit = useCallback(async () => {
+    setIsSubmitting(true);
     try {
       const answers = questions.map((_, index) => {
         return userAnswers[index] || 0;
@@ -116,6 +118,8 @@ const Quiz = () => {
       navigate("/quiz-result", { state: { result, nik, nama } });
     } catch (error) {
       console.error("Error submitting quiz: ", error);
+    } finally {
+      setIsSubmitting(false);
     }
   }, [category, nik, nama, timeLeft, userAnswers, questions, navigate]);
 
@@ -131,8 +135,12 @@ const Quiz = () => {
 
   if (countdown > 0) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-4xl font-bold">{countdown}</div>
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="relative flex items-center justify-center">
+          <span className="text-[200px] font-bold text-gray-700">
+            {countdown}
+          </span>
+        </div>
       </div>
     );
   }
@@ -225,9 +233,36 @@ const Quiz = () => {
       <div className="max-w-3xl mx-auto mt-8 flex justify-end">
         <button
           onClick={handleSubmit}
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          disabled={isSubmitting}
+          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed min-w-[120px] flex items-center justify-center"
         >
-          Submit Quiz
+          {isSubmitting ? (
+            <div className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              <span className="ml-2">Mengirimkan jawaban...</span>
+            </div>
+          ) : (
+            "Kirim Jawaban"
+          )}
         </button>
       </div>
     </div>

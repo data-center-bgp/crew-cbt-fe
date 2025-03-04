@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Add useLocation
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Category {
   ID: number;
@@ -9,13 +9,13 @@ interface Category {
 const SelectCategoryPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // Get location state
-  const nama = location.state?.nama; // Get Nama from state
-  const nik = location.state?.nik; // Get NIK from state
+  const location = useLocation();
+  const nama = location.state?.nama;
+  const nik = location.state?.nik;
 
   useEffect(() => {
-    // Fetch categories from API
     const fetchCategories = async () => {
       try {
         const response = await fetch(
@@ -34,13 +34,20 @@ const SelectCategoryPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/quiz", {
-      state: {
-        category: selectedCategory,
-        nama,
-        nik, // Pass NIK to quiz page
-      },
-    });
+    setIsLoading(true);
+    try {
+      navigate("/quiz", {
+        state: {
+          category: selectedCategory,
+          nama,
+          nik,
+        },
+      });
+    } catch (error) {
+      console.error("Error navigating to quiz: ", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -75,10 +82,11 @@ const SelectCategoryPage = () => {
           <div className="mt-8 flex justify-center">
             <button
               type="submit"
-              disabled={!selectedCategory}
+              disabled={!selectedCategory || isLoading}
               className={`
                 px-8 py-3 rounded-md text-white font-medium
-                transition-all duration-300
+                transition-all duration-300 min-h-[48px] min-w-[160px]
+                flex items-center justify-center
                 ${
                   selectedCategory
                     ? "bg-blue-500 hover:bg-blue-600"
@@ -86,7 +94,33 @@ const SelectCategoryPage = () => {
                 }
               `}
             >
-              Mulai Tes
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <span className="ml-2">Loading...</span>
+                </div>
+              ) : (
+                "Mulai Tes"
+              )}
             </button>
           </div>
         </form>
