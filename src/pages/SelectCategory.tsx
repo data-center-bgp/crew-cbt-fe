@@ -51,13 +51,40 @@ const SelectCategoryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-12 bg-gray-100 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+        <h2 className="mb-8 text-3xl font-bold text-center text-gray-900">
           Pilih Kategori Tes
         </h2>
+
+        {/* Quiz instructions */}
+        <div className="p-6 mb-8 bg-white rounded-lg shadow-md">
+          <h3 className="mb-4 text-xl font-bold text-gray-900">
+            PETUNJUK SEBELUM MEMULAI CBT
+          </h3>
+          <ol className="space-y-2 text-gray-800 list-decimal list-inside">
+            <li>
+              Pilih kategori sesuai yang telah ditentukan oleh admin sebelum
+              melakukan tes, jangan sampai salah memilih kategori tes.
+            </li>
+            <li>
+              Tipe soal adalah pilihan ganda dengan jumlah soal yang
+              berbeda-beda tiap kategorinya. Pilihlah jawaban yang menurut Anda
+              paling benar.
+            </li>
+            <li>
+              Durasi tes selama 60 menit, dimana waktu akan terus berjalan dan
+              tidak bisa dijeda. Mohon untuk memeriksa kembali jawaban tes
+              sebelum mengirimkan jawaban.
+            </li>
+            <li>
+              Hasil tes akan langsung ditampilkan setelah menyelesaikan tes.
+              Mohon untuk melaporkan ke admin untuk pencatatan hasil tes.
+            </li>
+          </ol>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {categories.map((cat) => (
               <div
                 key={cat.ID}
@@ -79,7 +106,7 @@ const SelectCategoryPage = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 flex justify-center">
+          <div className="flex justify-center mt-8">
             <button
               type="submit"
               disabled={!selectedCategory || isLoading}
@@ -97,7 +124,7 @@ const SelectCategoryPage = () => {
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <svg
-                    className="animate-spin h-5 w-5 text-white"
+                    className="w-5 h-5 text-white animate-spin"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
