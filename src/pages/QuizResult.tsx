@@ -35,17 +35,19 @@ const QuizResult = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="overflow-hidden bg-white rounded-lg shadow-lg">
           {/* header */}
-          <div className="bg-blue-500 text-white px-6 py-4">
-            <h2 className="text-2xl font-bold">Quiz Result</h2>
+          <div className="px-6 py-4 text-white bg-blue-500">
+            <h2 className="flex items-center justify-center text-2xl font-bold">
+              Hasil Tes
+            </h2>
           </div>
 
           {/* user information */}
-          <div className="border-b px-6 py-4">
+          <div className="px-6 py-4 border-b">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-gray-600">Name</p>
+                <p className="text-gray-600">Nama Crew</p>
                 <p className="font-semibold">{nama}</p>
               </div>
               <div>
@@ -57,54 +59,51 @@ const QuizResult = () => {
 
           {/* score result */}
           <div className="px-6 py-8 text-center">
-            <div className="text-6xl font-bold mb-4">
+            <div className="mb-4 text-6xl font-bold">
               <span className={getScoreColor(result.score, result.total)}>
                 {result.score}
               </span>
-              <span className="text-gray-400">{result.total}</span>
+              <span className="text-black">/{result.total}</span>
             </div>
-            <p className="text-lg mb-2">
+            <p className="mb-2 text-lg">
               {result.passed ? (
-                <span className="text-green-600">You passed the quiz! 🎉</span>
+                <span className="text-green-600">
+                  Selamat! Anda lulus tes! 🎉
+                </span>
               ) : (
-                <span className="text-red-600">You failed the quiz 😢</span>
+                <span className="text-red-600">
+                  Mohon maaf, Anda belum berhasil lulus tes 😢
+                </span>
               )}
             </p>
             <p className="text-gray-600">
-              Passing score: {result.passing_score} (
+              Nilai kelulusan: {result.passing_score} (
               {Math.round((result.passing_score / result.total) * 100)}%)
             </p>
           </div>
 
           {/* details */}
-          <div className="bg-gray-50 px-6 py-4">
+          <div className="px-6 py-4 bg-gray-50">
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
-                <p className="text-gray-600">Time Taken</p>
+                <p className="text-gray-600">Durasi Tes</p>
                 <p className="font-semibold">{formatTime(result.time_taken)}</p>
               </div>
               <div>
-                <p className="text-gray-600">Score Percentage</p>
+                <p className="text-gray-600">Persentase Skor</p>
                 <p className="font-semibold">
                   {Math.round((result.score / result.total) * 100)}%
                 </p>
               </div>
             </div>
           </div>
-
           {/* action buttons */}
-          <div className="px-6 py-4 flex justify-end space-x-4">
+          <div className="flex justify-center px-6 py-4 space-x-4 font-bold">
             <button
               onClick={() => navigate("/")}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+              className="px-4 py-2 text-gray-800 transition-colors bg-gray-200 rounded hover:bg-gray-300"
             >
-              Back to Home
-            </button>
-            <button
-              onClick={() => navigate("/select-category")}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
-              Start Another Quiz
+              Kembali ke Beranda
             </button>
           </div>
         </div>
