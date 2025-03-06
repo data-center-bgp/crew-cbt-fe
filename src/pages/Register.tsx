@@ -124,126 +124,148 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-96 p-6 bg-white shadow-md rounded-md">
-        <h2 className="text-xl font-bold mb-4 flex justify-center">
-          Masukkan Identitas Anda
+    <div className="min-h-screen py-8 bg-gray-50">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <div className="flex justify-center mb-4">
+          <img
+            src="https://images.barokahperkasagroup.id/uploads/logo-bpg.png"
+            alt="PT Barokah Perkasa Group Logo Company"
+            className="w-auto h-24"
+          />
+        </div>
+        <h1 className="text-2xl font-bold text-gray-900">
+          COMPETENCY BASED TRAINING (CBT) TEST
+        </h1>
+        <h2 className="text-xl font-semibold text-gray-800">
+          PT BAROKAH PERKASA GROUP
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              className={`w-full p-2 border rounded ${
-                errors.nama ? "border-red-500" : ""
-              }`}
-              name="nama"
-              value={formData.nama}
-              placeholder="Nama"
-              onChange={handleChange}
-              required
-            />
-            {errors.nama && (
-              <span className="text-red-500 text-sm">{errors.nama}</span>
-            )}
-          </div>
-          <div>
-            <input
-              className={`w-full p-2 border rounded ${
-                errors.nik ? "border-red-500" : ""
-              }`}
-              name="nik"
-              type="text"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              value={formData.nik}
-              placeholder="NIK"
-              onChange={handleChange}
-              required
-              maxLength={16}
-            />
-            {errors.nik && (
-              <span className="text-red-500 text-sm">{errors.nik}</span>
-            )}
-          </div>
-          <div>
-            <select
-              className={`w-full p-2 border rounded ${
-                errors.jabatan ? "border-red-500" : ""
-              }`}
-              name="jabatan"
-              value={formData.jabatan}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>
-                Jabatan
-              </option>
-              {JOB_POSITIONS.map((position) => (
-                <option key={position} value={position}>
-                  {position}
+      </div>
+
+      {/* Registration Form */}
+      <div className="flex items-center justify-center">
+        <div className="p-6 bg-white rounded-md shadow-md w-96">
+          <h2 className="flex justify-center mb-4 text-xl font-bold">
+            Masukkan Identitas Anda
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <input
+                className={`w-full p-2 border rounded ${
+                  errors.nama ? "border-red-500" : ""
+                }`}
+                name="nama"
+                value={formData.nama}
+                placeholder="Nama"
+                onChange={handleChange}
+                required
+              />
+              {errors.nama && (
+                <span className="text-sm text-red-500">{errors.nama}</span>
+              )}
+            </div>
+            <div>
+              <input
+                className={`w-full p-2 border rounded ${
+                  errors.nik ? "border-red-500" : ""
+                }`}
+                name="nik"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={formData.nik}
+                placeholder="NIK"
+                onChange={handleChange}
+                required
+                maxLength={16}
+              />
+              {errors.nik && (
+                <span className="text-sm text-red-500">{errors.nik}</span>
+              )}
+            </div>
+            <div>
+              <select
+                className={`w-full p-2 border rounded ${
+                  errors.jabatan ? "border-red-500" : ""
+                }`}
+                name="jabatan"
+                value={formData.jabatan}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Jabatan
                 </option>
-              ))}
-            </select>
-            {errors.jabatan && (
-              <span className="text-red-500 text-sm">{errors.jabatan}</span>
-            )}
-          </div>
-          <div>
-            <select
-              className={`w-full p-2 border rounded ${
-                errors.perusahaan ? "border-red-500" : ""
-              }`}
-              name="perusahaan"
-              value={formData.perusahaan}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>
-                Perusahaan
-              </option>
-              {COMPANIES.map((company) => (
-                <option key={company} value={company}>
-                  {company}
+                {JOB_POSITIONS.map((position) => (
+                  <option key={position} value={position}>
+                    {position}
+                  </option>
+                ))}
+              </select>
+              {errors.jabatan && (
+                <span className="text-sm text-red-500">{errors.jabatan}</span>
+              )}
+            </div>
+            <div>
+              <select
+                className={`w-full p-2 border rounded ${
+                  errors.perusahaan ? "border-red-500" : ""
+                }`}
+                name="perusahaan"
+                value={formData.perusahaan}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Perusahaan
                 </option>
-              ))}
-            </select>
-            {errors.perusahaan && (
-              <span className="text-red-500 text-sm">{errors.perusahaan}</span>
-            )}
-          </div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="mt-4 w-full bg-blue-500 text-white p-2 rounded cursor-pointer hover:bg-blue-600 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center min-h-[42px]"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                <span className="ml-2">Submitting...</span>
-              </div>
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </form>
+                {COMPANIES.map((company) => (
+                  <option key={company} value={company}>
+                    {company}
+                  </option>
+                ))}
+              </select>
+              {errors.perusahaan && (
+                <span className="text-sm text-red-500">
+                  {errors.perusahaan}
+                </span>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="mt-4 w-full bg-blue-500 text-white p-2 rounded cursor-pointer hover:bg-blue-600 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center min-h-[42px]"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-white animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  <span className="ml-2">Submitting...</span>
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
