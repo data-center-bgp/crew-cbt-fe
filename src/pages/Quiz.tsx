@@ -33,10 +33,6 @@ const Quiz = () => {
   const navigate = useNavigate();
   const { category, nik, nama } = location.state;
 
-  console.log("Location state:", location.state);
-  console.log("Nama:", nama);
-  console.log("NIK:", nik);
-
   // Initial countdown
   useEffect(() => {
     if (countdown > 0) {
@@ -58,13 +54,7 @@ const Quiz = () => {
         const data: QuizResponse = await response.json();
 
         // Debug all questions with their image URLs
-        data.questions.forEach((q, index) => {
-          console.log(`Question ${index + 1}:`, {
-            text: q.Text,
-            imageUrl: q.ImageUrl,
-            hasImage: !!q.ImageUrl,
-          });
-        });
+        data.questions.forEach(() => {});
         setQuestions(data.questions);
       } catch (error) {
         console.error("Error fetching questions: ", error);
@@ -74,7 +64,6 @@ const Quiz = () => {
   }, [category]);
 
   const handleAnswerSelect = (questionIndex: number, answerId: number) => {
-    console.log(`Question ${questionIndex}: selected answer ${answerId}`);
     setUserAnswers((prev) => ({
       ...prev,
       [questionIndex]: answerId,
@@ -87,9 +76,6 @@ const Quiz = () => {
       const answers = questions.map((_, index) => {
         return userAnswers[index] || 0;
       });
-      console.log("Questions:", questions);
-      console.log("User answers:", userAnswers);
-      console.log("Final answers array:", answers);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/quiz/submit`,
         {
@@ -150,9 +136,9 @@ const Quiz = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen p-4 bg-gray-100">
       {/* header */}
-      <div className="flex justify-between items-center mb-8 p-4 bg-white rounded-lg shadow">
+      <div className="flex items-center justify-between p-4 mb-8 bg-white rounded-lg shadow">
         <div className="text-lg">
           <p className="font-bold">{nama}</p>
           <p className="text-gray-600">{nik}</p>
@@ -163,16 +149,16 @@ const Quiz = () => {
         </div>
       </div>
       {/* questions */}
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-xl font-bold mb-4">
+      <div className="max-w-3xl p-6 mx-auto mb-8 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-4 text-xl font-bold">
           Question {currentQuestion + 1} of {questions.length}
         </h2>
-        <p className="text-lg mb-4">{questions[currentQuestion].Text}</p>
+        <p className="mb-4 text-lg">{questions[currentQuestion].Text}</p>
         {questions[currentQuestion].ImageUrl && (
           <img
             src={questions[currentQuestion].ImageUrl}
             alt="Question"
-            className="max-w-full h-auto rounded mb-4"
+            className="h-auto max-w-full mb-4 rounded"
             onError={(e) => {
               console.error("Image failed to load:", {
                 url: questions[currentQuestion].ImageUrl,
@@ -230,7 +216,7 @@ const Quiz = () => {
       </div>
 
       {/* submit button */}
-      <div className="max-w-3xl mx-auto mt-8 flex justify-end">
+      <div className="flex justify-end max-w-3xl mx-auto mt-8">
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}
@@ -239,7 +225,7 @@ const Quiz = () => {
           {isSubmitting ? (
             <div className="flex items-center justify-center">
               <svg
-                className="animate-spin h-5 w-5 text-white"
+                className="w-5 h-5 text-white animate-spin"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
