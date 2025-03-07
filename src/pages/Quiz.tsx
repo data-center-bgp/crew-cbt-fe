@@ -22,7 +22,7 @@ interface QuizResponse {
 const Quiz = () => {
   const [countdown, setCountdown] = useState<number>(3);
   const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(600);
+  const [timeLeft, setTimeLeft] = useState<number>(3600);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<{ [index: number]: number }>(
@@ -89,7 +89,7 @@ const Quiz = () => {
             nik,
             category_id: category,
             answers,
-            time_taken: 600 - timeLeft,
+            time_taken: 3600 - timeLeft,
           }),
         }
       );
