@@ -129,7 +129,7 @@ const RegisterPage = () => {
       <div className="mb-8 text-center">
         <div className="flex justify-center mb-4">
           <img
-            src="https://images.barokahperkasagroup.id/uploads/logo-bpg.png"
+            src="https://media.barokahperkasagroup.com/uploads/logo-bpg.png"
             alt="PT Barokah Perkasa Group Logo Company"
             className="w-auto h-24"
           />
